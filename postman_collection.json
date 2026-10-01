@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "Team-Based Chat App (Laravel API)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:8000/api" },
+    { "key": "token", "value": "" },
+    { "key": "team_id", "value": "" },
+    { "key": "channel_id", "value": "" },
+    { "key": "message_id", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('token', json.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('token', json.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Me",
+          "request": { "method": "GET", "url": "{{base_url}}/me" }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "url": "{{base_url}}/logout" }
+        }
+      ]
+    },
+    {
+      "name": "Company",
+      "item": [
+        { "name": "View Company", "request": { "method": "GET", "url": "{{base_url}}/company" } },
+        {
+          "name": "Update Company",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/company",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Acme Company\"\n}" }
+          }
+        },
+        { "name": "List Company Teams", "request": { "method": "GET", "url": "{{base_url}}/company/teams" } }
+      ]
+    },
+    {
+      "name": "Teams",
+      "item": [
+        { "name": "List Teams", "request": { "method": "GET", "url": "{{base_url}}/teams" } },
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/teams",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Engineering\",\n  \"description\": \"Engineering team\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('team_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        { "name": "View Team", "request": { "method": "GET", "url": "{{base_url}}/teams/{{team_id}}" } },
+        {
+          "name": "Update Team",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/teams/{{team_id}}",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Engineering Team\"\n}" }
+          }
+        },
+        { "name": "Delete Team", "request": { "method": "DELETE", "url": "{{base_url}}/teams/{{team_id}}" } }
+      ]
+    },
+    {
+      "name": "Channels",
+      "item": [
+        { "name": "List Channels", "request": { "method": "GET", "url": "{{base_url}}/teams/{{team_id}}/channels" } },
+        {
+          "name": "Create Channel",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/teams/{{team_id}}/channels",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Backend\",\n  \"description\": \"Backend discussion\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('channel_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        { "name": "View Channel", "request": { "method": "GET", "url": "{{base_url}}/channels/{{channel_id}}" } },
+        {
+          "name": "Update Channel",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/channels/{{channel_id}}",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Backend Team\"\n}" }
+          }
+        },
+        { "name": "Delete Channel", "request": { "method": "DELETE", "url": "{{base_url}}/channels/{{channel_id}}" } }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        { "name": "List Messages", "request": { "method": "GET", "url": "{{base_url}}/channels/{{channel_id}}/messages?page=1" } },
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/channels/{{channel_id}}/messages",
+            "body": { "mode": "raw", "raw": "{\n  \"message\": \"Deployment has been completed.\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const json = pm.response.json();",
+                  "  pm.collectionVariables.set('message_id', json.data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        { "name": "View Message", "request": { "method": "GET", "url": "{{base_url}}/messages/{{message_id}}" } },
+        {
+          "name": "Update Message",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/messages/{{message_id}}",
+            "body": { "mode": "raw", "raw": "{\n  \"message\": \"Deployment has been completed successfully.\"\n}" }
+          }
+        },
+        { "name": "Delete Message", "request": { "method": "DELETE", "url": "{{base_url}}/messages/{{message_id}}" } }
+      ]
+    },
+    {
+      "name": "Attachments",
+      "item": [
+        {
+          "name": "Upload Image",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/messages/{{message_id}}/attachments",
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "image", "type": "file", "src": "" }]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

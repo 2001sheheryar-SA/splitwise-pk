@@ -128,6 +128,7 @@ return [
         'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'),
     ],
 ],
+ 
 
     ],
 

@@ -25,6 +25,7 @@ Route::middleware('auth.token')->group(function () {
 
     //Route::get('/groups', [GroupController::class, 'store']);
     Route::post('/groups', [GroupController::class, 'store']);
+    Route::post('/groups/{group}/members', [GroupController::class, 'addMember']);
     //Route::get('/company/teams', [GroupController::class, 'teams']);
 
     Route::apiResource('teams', TeamController::class);

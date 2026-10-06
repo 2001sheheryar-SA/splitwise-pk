@@ -1,14 +1,14 @@
 # BASIC FLOW OF SPLITWISE APP
-[ User ] ───► Register
-                │
-[ User ] ───► Login
-                │
-[ User ] ───►  Can Create Groups
-                │
-[ User ] ───► Can Update/delete/Show that Groups
-                │
-[ User ] ───► Can Add/Remove members in that Groups
-                │
+[ User ] ───► Register <br>
+                │<br>
+[ User ] ───► Login<br>
+                │<br>
+[ User ] ───►  Can Create Groups<br>
+                │<br>
+[ User ] ───► Can Update/delete/Show that Groups<br>
+                │<br>
+[ User ] ───► Can Add/Remove members in that Groups<br>
+                │<br>
 [ Group Member ] ───► Creates Expense (Equal / Exact / Percentage)
                               │
                               ├──► Updates Group Balance Ledger

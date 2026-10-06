@@ -13,6 +13,7 @@ Route::middleware('auth.token')->group(function () {
     Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->middleware('can:show,expense');
     Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->middleware('can:isowner,expense'); 
     Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->middleware(AuthExpense::class); 
+    sadasd;
 
   
 });

@@ -17,8 +17,7 @@ Route::middleware('auth.token')->group(function () {
     Route::delete('/groups/{group}/members', [GroupController::class, 'removeMember'])->middleware(AuthGroup::class);
     Route::get('/groups/{group}/balances', [GroupController::class, 'showBalance'])->middleware('can:show,group');
 
-     Route::get('/groups/{group}/balances', [GroupController::class, 'showBalance'])->middleware('can:show,group');
-     sssss;
+    
 
     
 });

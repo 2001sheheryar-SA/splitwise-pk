@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\Message;
 use App\Models\Settlements;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ExpenseService
@@ -29,15 +30,14 @@ class ExpenseService
 
          
 
+         return DB::connection('mongodb')->transaction(function () use ($group,$data) {
 
-         $expense= Expense::create(
-           array_merge( ['group_id' => $group->id],
-            $data ) 
-        );
+         $expense= Expense::create(array_merge( ['group_id' => $group->id], $data ));
 
+         return $expense;
+         });
        
 
-        return $expense;
     }
 
     public function update(Expense $expense,array $data): Expense

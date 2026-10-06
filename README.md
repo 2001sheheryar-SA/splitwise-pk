@@ -1,9 +1,8 @@
 # BASIC FLOW OF SPLITWISE APP
 ```text
 [ User ] ───► Register 
-                │
-               
-[ User ] ───► Login<br>
+                │       
+[ User ] ───► Login
                 │
 [ User ] ───►  Can Create Groups<br>
                 │

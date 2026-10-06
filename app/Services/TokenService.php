@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\UserToken;
+use Illuminate\Support\Facades\DB;
 
 class TokenService
 {
@@ -12,12 +13,14 @@ class TokenService
      */
     public function issueTokenFor(User $user): UserToken
     {
+        return DB::connection('mongodb')->transaction(function () use ($user) {
         return UserToken::create([
             'user_id' => $user->id,
             'token' => UserToken::generatePlainTextToken(),
             'expires_at' => now()->addMinutes(60),
             
-        ]);
+         ]);
+          });
     }
 
     /**

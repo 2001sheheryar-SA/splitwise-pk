@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -18,7 +19,7 @@ class RegistrationService
    
     public function register(array $data): array
     {
-       
+      return DB::connection('mongodb')->transaction(function () use ($data) {
             $user = User::create([
                 'username' => $data['name'],
                 'email' => $data['email'],
@@ -30,7 +31,7 @@ class RegistrationService
          
 
            return ['user' => $user];
-
+       });
       
     }
 

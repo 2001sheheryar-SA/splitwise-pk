@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\Settlements;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Laravel\Mcp\Request;
 use Illuminate\Support\Facades\Response;
@@ -18,7 +19,7 @@ class SettlementService
 {
     public static function create(Groups $group, array $data): Settlements
     {   
-       
+        return DB::connection('mongodb')->transaction(function () use ($group,$data) {
         $settlement= Settlements::create([
             'group_id' => $group->id,
             'paid_by' => $data['paid_by'] ,
@@ -30,6 +31,7 @@ class SettlementService
 
 
         return $settlement;
+        });
     }
 
     public function update(Settlements $settlement, array $data): Settlements

@@ -118,7 +118,7 @@ return [
 
         'mongodb' => [
     'driver' => 'mongodb',
-    'dsn' => env('DB_URI'),
+    'dsn' => env('DB_URI',"mongodb://127.0.0.1:27017/laravelExpenseApp?replicaSet=rs0&directConnection=true"),
     'host' => env('DB_HOST', '127.0.0.1'),
     'port' => env('DB_PORT', 27017),
     'database' => env('DB_DATABASE', 'laravel'),
@@ -126,6 +126,8 @@ return [
     'password' => env('DB_PASSWORD', ''),
     'options' => [
         'database' => env('DB_AUTHENTICATION_DATABASE', 'admin'),
+        'replicaSet'       => 'rs0',
+        'directConnection' => true,
     ],
 ],
 

@@ -23,7 +23,7 @@ class GroupService
 
     // 3. Merge owner ID, remove duplicates, and ensure clean values
    
- //return DB::connection('mongodb')->transaction(function () use ($data) {
+ return DB::connection('mongodb')->transaction(function () use ($data) {
      $ownerId = (string) request()->user()->id;
     // 4. Save to MongoDB
      $group=Groups::create([
@@ -36,7 +36,7 @@ class GroupService
     
    
            return $group;   
-   // });
+    });
 
 
     }

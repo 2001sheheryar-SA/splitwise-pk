@@ -11,7 +11,7 @@ class EmailService
     /**
      * Issue a new random, unpredictable authentication token for a user.
      */
-    public static function createlink(User $user,array $data): void
+    public static function create(User $user,array $data): void
     {
          EmailInvitation::create([
             'user_id' => $user->id,

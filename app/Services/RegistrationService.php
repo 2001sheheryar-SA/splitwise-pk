@@ -60,32 +60,5 @@ class RegistrationService
     }
 
 
-    public function registerbyinvite(array $data, EmailInvitation $invitor): void
-    {
-     
-            $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'role' => 'member',
-                'email_verified_at'=>now(),
-                'password' => $data['password'],
-                'created_at' => now()
-            ]);
-
-            
-          User::where('id', $user->id)->update([
-                'company_id' =>  $invitor->company_id,
-            ]);
-            
-
-            $team = Team::where('created_by', $invitor->user_id)->first();
-
-            TeamService::addmember($team,$user);
-
-            $channel = Channel::where('team_id', $team->id)->first();
-            
-            ChannelService::addmember($channel,$user);
-        
-           
-    }
+   
 }

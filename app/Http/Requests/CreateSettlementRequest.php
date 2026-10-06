@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class CreateSettlementRequest extends FormRequest
 {
@@ -14,10 +15,37 @@ class CreateSettlementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => 'nullable|string',
-            'member_ids' => 'nullable|array',
-           // 'member_ids.*' => 'exists:users,id',
+            'paid_by' => ['required', 'string'],
+            'paid_to' => ['required', 'string'],
+            'amount' => ['required', 'numeric', 'min:0.01'],
+            'note' => ['required', 'string'],
+           
+        ];
+    }
+
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                if ($validator->errors()->isNotEmpty()) {
+                    return;
+                }
+
+                $paidBy = $this->input('paid_by');
+                $paidTo= $this->input('paid_to');
+              
+                if ($paidBy === $paidTo) {
+                   
+                        $validator->errors()->add(
+                            'same_users',
+                            "Both Payer and receiver must be different users."
+                        );
+                    
+                }
+
+                
+            }
         ];
     }
 
@@ -25,7 +53,7 @@ class CreateSettlementRequest extends FormRequest
      public function messages(): array
     {
         return [
-           // 'member_ids.*.exists' => 'This member  must be a valid user .',    
+           'amount.min' => 'The amount field must be greater than 0.',    
         ];
     }
 

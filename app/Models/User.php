@@ -43,6 +43,14 @@ class User extends Authenticatable
         ];
     }
 
+    public function groups(): HasMany
+    {
+        // Parameter 1: Related Model
+        // Parameter 2: Foreign key field stored in the Group collection ('member_ids')
+        // Parameter 3: Local key in User model ('_id' or 'id')
+        return $this->hasMany(Groups::class, 'member_ids', '_id');
+    }
+
     /**
      * The company this user belongs to (and may own).
      */

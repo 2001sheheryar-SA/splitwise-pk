@@ -16,8 +16,7 @@ class GroupRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => 'nullable|string',
-            'member_ids' => 'nullable|array',
-           // 'member_ids.*' => 'exists:users,id',
+           
         ];
     }
 

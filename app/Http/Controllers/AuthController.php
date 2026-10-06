@@ -42,7 +42,7 @@ class AuthController extends Controller
     {
         $result = $this->registrationService->register($request->validated());
         //EmailInviteController::sendinvitation($result['user'],0);
-        return  Response::success('Registration successful and Email Verify Link Sent. Plz verify your email before signin', [
+        return  Response::success('Registration successful.', [
             'user' => new UserResource($result['user']),], 201);
     }
 
@@ -93,24 +93,24 @@ class AuthController extends Controller
 
 
 
-    public function registerinvitation(Request $request,string $token): JsonResponse
-    {
+    // public function registerinvitation(Request $request,string $token): JsonResponse
+    // {
         
-        $user = \App\Models\EmailInvitation::where('token', $token)->first();
+    //     $user = \App\Models\EmailInvitation::where('token', $token)->first();
         
         
-        $data= $request->validate([
-            'name'     => ['required'],
-            'email'    => ['required'],
-            'password' => ['required'],
-        ]);
+    //     $data= $request->validate([
+    //         'name'     => ['required'],
+    //         'email'    => ['required'],
+    //         'password' => ['required'],
+    //     ]);
 
-        $this->registrationService->registerbyinvite($data, $user);
+    //     $this->registrationService->registerbyinvite($data, $user);
     
-        \App\Models\EmailInvitation::where('token', $token)->delete();
+    //     \App\Models\EmailInvitation::where('token', $token)->delete();
 
-        return Response::success('Registration successful you can now log in.');
+    //     return Response::success('Registration successful you can now log in.');
        
-    }
+    // }
 
 }

@@ -25,8 +25,7 @@ class TokenService
      */
     public function revoke(string $token): void
     {
-        //$token->delete();
-        //UserToken::destroy($token);
+        
         UserToken::where('token', $token)->delete();
        
     }

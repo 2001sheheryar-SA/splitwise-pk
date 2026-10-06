@@ -16,8 +16,9 @@ return new class extends Migration
            // $collection->index('owner_id');
            //$collection->array('member_ids')->nullable()->index('member_ids'); // Stores array of member IDs
             $collection->timestamps();
+            $collection->timestamp('deleted_at')->nullable();
             $collection->index('owner_id');
-           $collection->index('member_ids');
+            $collection->index('member_ids');
 
         });
 

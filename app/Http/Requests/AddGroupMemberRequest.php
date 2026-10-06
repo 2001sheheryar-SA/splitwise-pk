@@ -14,10 +14,9 @@ class AddGroupMemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'description' => 'nullable|string',
-            'member_ids' => 'nullable|array',
-           // 'member_ids.*' => 'exists:users,id',
+            
+           'user_id' => 'required|string',
+          
         ];
     }
 
@@ -25,7 +24,7 @@ class AddGroupMemberRequest extends FormRequest
      public function messages(): array
     {
         return [
-           // 'member_ids.*.exists' => 'This member  must be a valid user .',    
+          // 'members.*.exists' => 'This member  is not a valid user .',    
         ];
     }
 

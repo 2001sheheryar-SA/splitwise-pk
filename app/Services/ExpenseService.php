@@ -7,6 +7,7 @@ use App\Models\Expense;
 use App\Models\Message;
 use App\Models\Settlements;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class ExpenseService
 {
@@ -26,11 +27,17 @@ class ExpenseService
 
          //print_r($data);exit();
 
-         return Expense::create(
+         
+
+
+         $expense= Expense::create(
            array_merge( ['group_id' => $group->id],
-            $data )
-           
+            $data ) 
         );
+
+       
+
+        return $expense;
     }
 
     public function update(Expense $expense,array $data): Expense
@@ -39,7 +46,10 @@ class ExpenseService
         $data['group_id'] = $expense->group->id;
         $data['deleted_at'] = null;
         $expense->update($data);
-        return $expense->fresh();
+        $expense->fresh();
+        
+
+        return  $expense;
     }
 
    

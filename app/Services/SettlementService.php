@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\Settlements;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Laravel\Mcp\Request;
 use Illuminate\Support\Facades\Response;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
@@ -27,7 +28,6 @@ class SettlementService
             'deleted_at' =>  null,
         ]);
 
-       
 
         return $settlement;
     }
@@ -36,7 +36,9 @@ class SettlementService
     {
         $settlement->update($data);
 
-        return $settlement->refresh();
+        $settlement->refresh();
+
+        return $settlement;
     }
 
     // public function delete(Channel $channel): void

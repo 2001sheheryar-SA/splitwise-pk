@@ -19,6 +19,7 @@ use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class GroupController extends Controller
@@ -72,6 +73,7 @@ class GroupController extends Controller
     {
         
         $group->delete();
+
 
         return Response::success('Group deleted successfully.',200);
     }

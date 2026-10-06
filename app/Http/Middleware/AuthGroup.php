@@ -27,18 +27,15 @@ class AuthGroup
     public function handle(Request $request, Closure $next): SymfonyResponse
     {
         $group = $request->route('group');
-        //$user = $request->input('user_id');
+        
         $user = User::find($request->input('user_id'));
        
         if (!$user) {
             return Response::error('Invalid userid.',400);
        }
 
-
         Gate::authorize('isowner',$group);
 
-       
-      //$ismember=GroupService::isMember($group, $user->id);
        if ($request->isMethod('post')) {
            Gate::authorize('ismember',[$group,$user->id]);
        }
@@ -47,7 +44,6 @@ class AuthGroup
        }
        
            
-
         return $next($request);
     }
 }

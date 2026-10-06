@@ -32,31 +32,14 @@ class AuthSettlement
         $paidby=$request->input('paid_by');
         $paidto=$request->input('paid_to');
         
-       // $ismember=GroupService::isMember($group, request()->user()->id);
-       
-      //  if (!$ismember) {return Response::error('This authenticated user is not member of this group.');}
-        Gate::authorize('isowner',$group);
-        // if($request->input('paid_by') === $request->input('paid_to')){
-
-        // return Response::error('Both Payer and receiver must be different users.');
-        // }
+      
+        Gate::authorize('show',$group);
+        
         Gate::authorize('ispaidBy',[$group,$paidby]);
+
         Gate::authorize('ispaidBy',[$group,$paidto]);
 
-        // $paidBy = GroupService::isMember($group, $request->input('paid_by'));
-       
-        // if (!$paidBy) {return Response::error('This user specified in paid_by is not a member of this group.');}
-
-        // $paidto = GroupService::isMember($group, $request->input('paid_to'));
-       
-        // if (!$paidto) {return Response::error('This user specified in paid_to is not a member of this group.');}
         
-        
-       
-
-        
-    
-
         return $next($request);
     }
 }

@@ -32,7 +32,7 @@ class AuthExpense
         
         $paidBy = $request->input('paid_by');
         $participants = $request->input('participants', []);
-       // $amount = $request->input('amount');
+       
 
         if ($request->isMethod('put')) {
            Gate::authorize('isowner', $request->route('expense'));

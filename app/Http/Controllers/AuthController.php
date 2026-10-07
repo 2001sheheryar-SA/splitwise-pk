@@ -77,7 +77,7 @@ class AuthController extends Controller
      
         $token = $request->attributes->get('current_token');
         $this->tokenService->revoke($token);
-        return Response::success('Logged out successfully.');
+        return Response::success('Logged out successfully.',200);
     }
 
     /**
@@ -87,7 +87,7 @@ class AuthController extends Controller
 
     public function me(Request $request): JsonResponse
     {
-        return Response::success('Current user fetched successfully.', new UserResource($request->user()));
+        return Response::success('Current user fetched successfully.', new UserResource($request->user()),200);
     }
 
 

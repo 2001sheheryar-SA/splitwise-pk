@@ -14,12 +14,13 @@ class TokenService
     public function issueTokenFor(User $user): UserToken
     {
         return DB::connection('mongodb')->transaction(function () use ($user) {
-        return UserToken::create([
-            'user_id' => $user->id,
-            'token' => UserToken::generatePlainTextToken(),
-            'expires_at' => now()->addMinutes(60),
-            
-         ]);
+        
+            return UserToken::create([
+                'user_id' => $user->id,
+                'token' => UserToken::generatePlainTextToken(),
+                'expires_at' => now()->addMinutes(60),
+                
+            ]);
           });
     }
 

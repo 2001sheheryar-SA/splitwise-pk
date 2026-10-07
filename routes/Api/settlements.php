@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\SettlementController;
 use App\Http\Middleware\AuthSettlement;
 use Illuminate\Support\Facades\Route;
@@ -15,4 +15,8 @@ Route::middleware('auth.token')->group(function () {
     Route::get('/settlements/{settlement}', [SettlementController::class, 'show'])->middleware('can:show,settlement');
     Route::put('/settlements/{settlement}', [SettlementController::class, 'update'])->middleware('can:ispayer,settlement');
     Route::delete('/settlements/{settlement}', [SettlementController::class, 'destroy'])->middleware('can:ispayer,settlement');
-});
+
+
+    Route::post('/attachments/{settlement}', [AttachmentController::class, 'store'])->middleware('can:ispayer,settlement');
+    Route::get('/attachments/{attachment}', [AttachmentController::class, 'download'])->middleware('can:download,attachment');
+    });

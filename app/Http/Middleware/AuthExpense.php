@@ -35,10 +35,11 @@ class AuthExpense
        
 
         if ($request->isMethod('put')) {
-           Gate::authorize('isowner', $request->route('expense'));
+           Gate::authorize('isexpensepayer', $request->route('expense'));
        }
 
-        Gate::authorize('ispaidBy', [$group, $paidBy]);
+        Gate::authorize('isnotgroupmember', [$group, $paidBy,'This user specified in paid_by is not a member of this group.']);
+        
         Gate::authorize('participants', [$group, $participants]);
 
 

@@ -33,7 +33,8 @@ class ExpenseController extends Controller
        
          $limit = $request->integer('limit', 10);
         
-         $expenses = $group->expenses()->paginate($limit);
+         $expenses = $group->expenses()->filter($request->only(['payer', 'split_type', 'date_from', 'date_to']))
+         ->paginate($limit);
 
          $message =  $expenses->total() === 0 ? 'No Expenses found.' : 'Expenses fetched successfully.';
     
@@ -58,8 +59,7 @@ class ExpenseController extends Controller
       
        $expenses = Expense::find($expense->id);
       
-
-        return Response::success(
+       return Response::success(
            'Expense fetched successfully.',
             new ExpenseResource($expenses),
             200 );

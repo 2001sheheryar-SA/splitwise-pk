@@ -35,9 +35,9 @@ class AuthSettlement
       
         Gate::authorize('show',$group);
         
-        Gate::authorize('ispaidBy',[$group,$paidby]);
+        Gate::authorize('isnotgroupmember',[$group,$paidby,'This user specified in paid_by is not a member of this group.']);
 
-        Gate::authorize('ispaidBy',[$group,$paidto]);
+        Gate::authorize('isnotgroupmember',[$group,$paidto,'This user specified in paid_to is not a member of this group.']);
 
         
         return $next($request);

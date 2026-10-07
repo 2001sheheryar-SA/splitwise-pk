@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use MongoDB\Laravel\Eloquent\Model;
-
-use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use MongoDB\Laravel\Eloquent\SoftDeletes;
 
@@ -42,20 +42,17 @@ class Expense extends Model
         return $this->belongsTo(Groups::class, 'group_id', '_id');
     }
 
-    // public function company(): BelongsTo
-    // {
-    //     return $this->belongsTo(Company::class);
-    // }
-
-    // public function channels(): HasMany
-    // {
-    //     return $this->hasMany(Channel::class);
-    // }
-
-    // public function members()
-    // {
-    //     return $this->belongsToMany(User::class,'team_members');
-    // }
-
+    public function scopeFilter(Builder $query, array $filters): Builder
+{
+    return $query
+        ->when($filters['payer'] ?? null,
+            fn ($q, $payer) => $q->where('paid_by', $payer))
+        ->when($filters['split_type'] ?? null,
+            fn ($q, $type) => $q->where('split_type', $type))
+        ->when($filters['date_from'] ?? null,
+            fn ($q, $date) => $q->where('created_at', '>=', Carbon::parse($date)->startOfDay()))
+        ->when($filters['date_to'] ?? null,
+            fn ($q, $date) => $q->where('created_at', '<=', Carbon::parse($date)->endOfDay()));
+}
     
 }

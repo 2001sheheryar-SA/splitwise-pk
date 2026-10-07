@@ -4,21 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSettlementRequest;
-use App\Http\Requests\MessageRequest;
-
-use App\Http\Resources\MessageResource;
 use App\Http\Resources\SettlementResource;
-use App\Models\Channel;
 use App\Models\Groups;
-use App\Models\Message;
 use App\Models\Settlements;
-use App\Models\User;
 use App\Services\ExpenseService;
-use App\Services\MessageService;
 use App\Services\SettlementService;
-use App\Services\ViewQuery;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -28,9 +19,7 @@ class SettlementController extends Controller
     {
     }
 
-    /**
-     * GET /api/channels/{channel}/messages
-     */
+ 
     public function store(CreateSettlementRequest $request,Groups $group): JsonResponse
     {
         
@@ -66,9 +55,8 @@ class SettlementController extends Controller
 
     public function destroy(Settlements $settlement): JsonResponse
     {
-        
-        
         $settlement->delete();
+
         return Response::success('Settlement deleted successfully.', 200);
     }
 
@@ -78,7 +66,6 @@ class SettlementController extends Controller
       
        $settlements = Settlements::find($settlement->id);
       
-
         return Response::success(
            'Settlements fetched successfully.',
             new SettlementResource($settlements),
@@ -88,10 +75,9 @@ class SettlementController extends Controller
     public function index(Request $request,Groups $group): JsonResponse
     {   
         $limit = $request->integer('limit');
-       $settlements = $group->settlements()
-                        ->paginate($limit);
+
+        $settlements = $group->settlements()->paginate($limit);
         
-    
         $message =  $settlements->total() === 0 ? 'No Settlement found.' : 'Settlements fetched successfully.';
     
 

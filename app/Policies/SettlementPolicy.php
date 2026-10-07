@@ -14,9 +14,14 @@ class SettlementPolicy
     /**
      * A user may only interact with channels whose team belongs to their company.
      */
-    public function ispayer(User $user, Settlements $settlement): bool
+    public function ispayer(User $user, Settlements $settlement): Response
     {
-        return $user->id === $settlement->paid_by;
+       // return $user->id === $settlement->paid_by;
+
+         if ($user->id !== $settlement->paid_by) {
+        return Response::deny('This Settlement is not paid by authenticated user.');
+        }
+        return Response::allow();
     }
 
     public function show (User $user, Settlements $settlement): Response

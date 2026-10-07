@@ -34,13 +34,13 @@ class AuthGroup
             return Response::error('Invalid userid.',400);
        }
 
-        Gate::authorize('isowner',$group);
+        Gate::authorize('isgroupowner',$group);
 
        if ($request->isMethod('post')) {
-           Gate::authorize('ismember',[$group,$user->id]);
+           Gate::authorize('isgroupmember',[$group,$user->id,'The  user you are adding in group is already member of this group.']);
        }
-       if ($request->isMethod('delete') || $request->isMethod('get')) {
-          Gate::authorize('isnotmember',[$group,$user->id]);
+       if ($request->isMethod('delete')) {
+          Gate::authorize('isnotgroupmember',[$group,$user->id,'The user you are removing from group is not member of this group.']);
        }
        
            

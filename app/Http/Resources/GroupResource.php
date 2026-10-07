@@ -13,7 +13,7 @@ class GroupResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-           // 'owner_id' => new UserResource($this->whenLoaded('owner')),
+         
             'owner_id' => new UserResource($this->owner),
             'member_ids' => $this->member_ids,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),

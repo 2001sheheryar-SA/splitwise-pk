@@ -43,13 +43,7 @@ class SettlementService
         return $settlement;
     }
 
-    // public function delete(Channel $channel): void
-    // {   
-
-    //     ChannelMember::where('channel_id', $channel->id)->delete();
-    //     $channel->delete();
-    // }
-
+   
 
     public static function validateSettlement(array $balances, string $payerId, float $settleAmount): ?SymfonyResponse
 {

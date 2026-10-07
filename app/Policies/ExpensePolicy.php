@@ -20,9 +20,14 @@ class ExpensePolicy
 
    
 
-    public function isowner(User $user, Expense $expense): bool
+    public function isexpensepayer(User $user, Expense $expense): Response
     {
-        return $user->id === $expense->paid_by;
+        //return $user->id === $expense->paid_by;
+
+         if ($user->id !== $expense->paid_by) {
+        return Response::deny('This Expense is not paid by authenticated user.');
+        }
+        return Response::allow();
     }
 
     public function show(User $user, Expense $expense): Response
@@ -32,7 +37,7 @@ class ExpensePolicy
        $ismember=GroupService::isMember($group,$user->id);
 
        if (!$ismember) {
-        return Response::deny('This auth user is not member of this group.');
+        return Response::deny('This authenticated user is not member of this expense group.');
         }
          return Response::allow();
     

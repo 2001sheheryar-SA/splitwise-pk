@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-
+use App\Models\Attachment;
 use App\Models\Channel;
 use App\Models\Company;
 use App\Models\Expense;
@@ -10,6 +10,7 @@ use App\Models\Groups;
 use App\Models\Message;
 use App\Models\Settlements;
 use App\Models\Team;
+use App\Policies\AttachmentPolicy;
 use App\Policies\ChannelPolicy;
 use App\Policies\CompanyPolicy;
 use App\Policies\ExpensePolicy;
@@ -40,6 +41,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Groups::class, GroupPolicy::class);
         Gate::policy(Expense::class, ExpensePolicy::class);
         Gate::policy(Settlements::class, SettlementPolicy::class);
+        Gate::policy(Attachment::class, AttachmentPolicy::class);
        
     }
       

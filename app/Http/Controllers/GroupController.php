@@ -31,7 +31,7 @@ class GroupController extends Controller
     public function show(Request $request): JsonResponse
     {   
         $limit = $request->integer('limit', 10);
-        //$group = GroupService::getGroups();
+
         $group = request()->user()->groups()
         ->when(request('name'), function ($query,$name){
             $query->where('name', 'like', "%{$name}%");
@@ -40,7 +40,6 @@ class GroupController extends Controller
     
         $message =  $group->total() === 0 ? 'No Groups found.' : 'Groups fetched successfully.';
     
-       // Gate::authorize('view', $company);
 
         return Response::success($message,GroupResource::collection($group),200
         ,[
@@ -86,14 +85,16 @@ class GroupController extends Controller
     {
        
         $group = GroupService::addMember($group,$request->input('user_id'));
-        return Response::success('Group member added successfully.', new GroupResource($group));
+
+        return Response::success('Group member added successfully.', new GroupResource($group),200);
     }
 
     public function removeMember(Request $request,Groups $group): JsonResponse
     {
        
         GroupService::removeMember($group, $request->input('user_id'));
-        return Response::success('Group member removed successfully.');
+
+        return Response::success('Group member removed successfully.',200);
     }
 
 
@@ -105,8 +106,9 @@ class GroupController extends Controller
         if(empty($balances)){
          return Response::error(' Group balances not found.');
         }
-        return Response::success('Group balances fetched successfully.', new GroupBalanceResource(['group_id' => $group->id,
-        'balances' => $balances,]));
+        return Response::success('Group balances fetched successfully.',
+         new GroupBalanceResource(['group_id' => $group->id,'balances' => $balances,])
+         ,200);
     }
 
 

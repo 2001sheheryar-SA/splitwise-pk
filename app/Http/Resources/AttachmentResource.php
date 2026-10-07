@@ -11,11 +11,11 @@ class AttachmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'message_id' => $this->message_id,
-            'file_path' => $this->file_path,
-            'file_name' => $this->file_name,
+            'settlement_id' => $this->settlement_id,
+            'file_id' => $this->file_id,
+            'filename' => $this->filename,
             'mime_type' => $this->mime_type,
-            'file_size' => $this->file_size,
+            'size' => $this->size,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at->format('Y-m-d H:i:s'),
         ];

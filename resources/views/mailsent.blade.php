@@ -1,1 +1,0 @@
-<h1>MAIL SENT</h1>

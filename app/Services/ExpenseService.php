@@ -89,7 +89,7 @@ public static function getGroupBalances(string $groupId,string $settlementid='')
 
     $settlements = empty($settlementid)? Settlements::where('group_id', $groupId)->get()
                    :Settlements::where('group_id', $groupId)->where('id', '!=', $settlementid)->get();
-     //echo   $settlements ; exit();          
+             
     
 
         foreach ($settlements as $settlement) {

@@ -11,14 +11,17 @@ use Illuminate\Auth\Access\Response ;
 
 class GroupPolicy
 {
-    /**
-     * Any member of the company may view it.
-     */
-    public function isowner(User $user, Groups $group): bool
+    
+    public function isgroupowner(User $user, Groups $group): Response
 
     {  
     
-        return $user->id === $group->owner_id;
+       /// return $user->id === $group->owner_id;
+
+        if ($user->id !== $group->owner_id) {
+        return Response::deny('This authenticated user is not owner of this group.');
+        }
+        return Response::allow();
     }
 
 
@@ -36,69 +39,52 @@ class GroupPolicy
     }
 
 
-    public function ispaidBy (User $user, Groups $group,string $paidby): Response
+    
+    public function isnotgroupmember (User $user, Groups $group,string $userid,string $msg=''): Response
 
     {  
     
-        $ismember=GroupService::isMember($group,$paidby);
+        $ismember=GroupService::isMember($group,$userid);
 
        if (!$ismember) {
-        return Response::deny('This user specified in paid_by/paid_to is not a member of this group.');
+        return Response::deny($msg);
         }
          return Response::allow();
     
     }
 
 
-    public function ismember (User $user, Groups $group, string $member): Response
+    public function isgroupmember (User $user, Groups $group,string $userid,string $msg=''): Response
 
     {  
     
-         $ismember=GroupService::isMember($group,$member);
+        $ismember=GroupService::isMember($group,$userid);
 
        if ($ismember) {
-        return Response::deny('This user is already member of this group.');
+        return Response::deny($msg);
         }
          return Response::allow();
     
     }
 
 
-    public function isnotmember (User $user, Groups $group, string $member): Response
+   
 
-    {  
-    
-         $ismember=GroupService::isMember($group,$member);
-
-       if (!$ismember) {
-        return Response::deny('This user is not member of this group.');
-        }
-         return Response::allow();
-    
-    }
-
-    /**
-     * Only the owner may update company details.
-     */
-    public function participants(User $user,Groups $group,array $participants,float $amount=null): Response
+    public function participants(User $user,Groups $group,array $participants): Response
     {
-       // $participants = $request->input('participants', []);
-        $sumamt=0.0;
+       
 
         if (is_array($participants)) {
             foreach ($participants as $participant) {
                 $userId = $participant['user_id'] ?? null;
-                // $sumamt += $participant['amount'];
+                
                 if ($userId && !GroupService::isMember($group, $userId)) {
                     return Response::deny("Participant user {$userId} is not a member of this group.",422);
                 }
             }
         }
        
-        // if($sumamt !== $amount){
-        // return Response::deny("The Amount must be equal to all participants sum amount .",422);
-        // }
-
+        
         return Response::allow();
     }
 }

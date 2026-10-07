@@ -16,29 +16,29 @@ class EmailInviteController extends Controller
     //
 
 
-    public static function sendinvitation(User $user, int $invitation)
-    {   
-       $email=$user['email'];
+    // public static function sendinvitation(User $user, int $invitation)
+    // {   
+    //    $email=$user['email'];
 
-       if ($invitation === 1) {
-            $validatedData = request()->validate([
-                 'email' => ['required', 'email', 'unique:users,email'],
-                ],['email.unique' => 'This email address is already registered in the db.'
-                ]);
-          $email= $validatedData['email'];
-          $user= request()->user();
-        } 
+    //    if ($invitation === 1) {
+    //         $validatedData = request()->validate([
+    //              'email' => ['required', 'email', 'unique:users,email'],
+    //             ],['email.unique' => 'This email address is already registered in the db.'
+    //             ]);
+    //       $email= $validatedData['email'];
+    //       $user= request()->user();
+    //     } 
 
-        $data['token'] = bin2hex(random_bytes(32));
-        $data['expires']=now()->plus(minutes: 120)->timestamp;
-        $data['invite']=$invitation;
+    //     $data['token'] = bin2hex(random_bytes(32));
+    //     $data['expires']=now()->plus(minutes: 120)->timestamp;
+    //     $data['invite']=$invitation;
 
-        EmailService::createlink($user,$data);
-        EmailJob::dispatch($email, $data['token'], $data['expires'],$data['invite']);
+    //     EmailService::createlink($user,$data);
+    //     EmailJob::dispatch($email, $data['token'], $data['expires'],$data['invite']);
 
-        return Response::success('Company Invite Link has been sent to above  email.');
+    //     return Response::success('Company Invite Link has been sent to above  email.');
 
-    }
+    // }
 
 
     public function emailverified(Request $request)

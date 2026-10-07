@@ -21,13 +21,11 @@ return new class extends Migration
             $collection->timestamps();
         });
 
-        Schema::create('sessions', function (Blueprint $collection) {
-            $collection->string('id')->primary();
-            $collection->foreignId('user_id')->nullable()->index();
-            $collection->string('ip_address', 45)->nullable();
-            $collection->text('user_agent')->nullable();
-            $collection->longText('payload');
-            $collection->integer('last_activity')->index();
+        Schema::create('attachments', function (Blueprint $collection) {
+            $collection->index('settlement_id');
+            $collection->timestamps();
+            $collection->timestamp('deleted_at')->nullable();
+           
         });
 
          
@@ -44,7 +42,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('attachments');
         
        
     }

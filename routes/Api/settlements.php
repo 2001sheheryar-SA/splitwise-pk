@@ -16,7 +16,8 @@ Route::middleware('auth.token')->group(function () {
     Route::put('/settlements/{settlement}', [SettlementController::class, 'update'])->middleware('can:ispayer,settlement');
     Route::delete('/settlements/{settlement}', [SettlementController::class, 'destroy'])->middleware('can:ispayer,settlement');
 
-
+    // Group Settlements Attachments
     Route::post('/attachments/{settlement}', [AttachmentController::class, 'store'])->middleware('can:ispayer,settlement');
     Route::get('/attachments/{attachment}', [AttachmentController::class, 'download'])->middleware('can:download,attachment');
+
     });

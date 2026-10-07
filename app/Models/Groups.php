@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use MongoDB\Laravel\Eloquent\Model;
 //use MongoDB\Laravel\Relations\HasMany;
@@ -11,8 +11,9 @@ use MongoDB\Laravel\Eloquent\SoftDeletes;
 
 class Groups extends Model
 {
-    //use HasFactory;
+    use HasFactory;
     use SoftDeletes;
+    
     protected $connection = 'mongodb';
    
 
@@ -25,7 +26,7 @@ class Groups extends Model
     ];
 
     protected $casts = [
-        //'member_ids' => 'array',
+       
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
@@ -38,7 +39,7 @@ class Groups extends Model
 
     public function members()
     {
-        //return $this->belongsToMany(User::class, null, 'group_ids', 'member_ids');
+        
         return User::whereIn('_id', $this->member_ids ?? []);
     }
 
@@ -54,13 +55,5 @@ class Groups extends Model
         return $this->hasMany(Settlements::class, 'group_id', 'id');
     }
 
-    // public function users(): HasMany
-    // {
-    //     return $this->hasMany(User::class);
-    // }
-
-    // public function teams(): HasMany
-    // {
-    //     return $this->hasMany(Team::class);
-    // }
+   
 }

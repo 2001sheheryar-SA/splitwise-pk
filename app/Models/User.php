@@ -51,60 +51,7 @@ class User extends Authenticatable
         return $this->hasMany(Groups::class, 'member_ids', '_id');
     }
 
-    /**
-     * The company this user belongs to (and may own).
-     */
-    // public function company(): BelongsTo
-    // {
-    //     return $this->belongsTo(Company::class);
-    // }
+    
 
-    /**
-     * The company owned by this user, if any.
-     */
-    // public function ownedCompany(): HasMany
-    // {
-    //     return $this->hasMany(Company::class, 'owner_id');
-    // }
-
-    /**
-     * All authentication tokens issued to this user.
-     */
-    // public function tokens(): HasMany
-    // {
-    //     return $this->hasMany(UserToken::class);
-    // }
-
-    /**
-     * All messages sent by this user.
-     */
-    // public function messages(): HasMany
-    // {
-    //     return $this->hasMany(Message::class);
-    // }
-
-    // public function isOwnerOf(Company $company): bool
-    // {
-    //     return $this->id === $company->owner_id;
-    // }
-
-
-//     public function teamMemberships(): HasMany
-// {
-//     return $this->hasMany(TeamMember::class);
-// }
-
-// Teams this user was added to (via pivot)
-
-// public function teams(): BelongsToMany
-// {
-//     return $this->belongsToMany(Team::class, 'user_id', 'team_id');
-// }
-
-// Team members that *this* user has added to teams
-// public function addedTeamMembers(): HasMany
-// {
-//     return $this->hasMany(TeamMember::class, 'added_by');
-// }
 
 }

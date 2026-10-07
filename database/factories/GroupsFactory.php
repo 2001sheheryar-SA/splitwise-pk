@@ -2,22 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Company;
+use App\Models\Groups;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Groups>
  */
-class TeamFactory extends Factory
+class GroupsFactory extends Factory
 {
     public function definition(): array
     {
         return [
-            'company_id' => Company::factory(),
-            'created_by' => User::factory(),
             'name' => fake()->unique()->word(),
             'description' => fake()->sentence(),
+            'owner_id' => User::factory(),
+            'member_ids' => [User::factory()],
         ];
     }
 }
